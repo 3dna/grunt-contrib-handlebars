@@ -40,7 +40,8 @@ module.exports = function(grunt) {
       amd: false,
       commonjs: false,
       knownHelpers: [],
-      knownHelpersOnly: false
+      knownHelpersOnly: false,
+      window: false
     });
 
     // assign regex for partials directory detection
@@ -191,6 +192,10 @@ module.exports = function(grunt) {
           // Export the templates object for CommonJS environments.
           output.unshift("module.exports = function(Handlebars) {");
           output.push("};");
+        }
+
+        if (options.window) {
+          output.push('window.' + options.namespace  + ' = ' + nsInfo.namespace + ';');
         }
 
         filesCount++;
